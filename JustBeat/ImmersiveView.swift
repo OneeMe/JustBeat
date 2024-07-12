@@ -8,6 +8,8 @@ import RealityKit
 import RealityKitContent
 
 struct ImmersiveView: View {
+    
+    @StateObject var gameManager: GameManager = GameManager.shared
 
     var body: some View {
         RealityView { content in
@@ -18,6 +20,12 @@ struct ImmersiveView: View {
                 // Put skybox here.  See example in World project available at
                 // https://developer.apple.com/
             }
+        }
+        .onAppear() {
+            gameManager.start()
+        }
+        .onDisappear() {
+            gameManager.stop()
         }
     }
 }
