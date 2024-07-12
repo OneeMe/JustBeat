@@ -17,6 +17,7 @@ struct ImmersiveView: View {
             if let immersiveContentEntity = try? await Entity(named: "Immersive", in: realityKitContentBundle) {
                 content.add(immersiveContentEntity)
                 content.add(gameManager.root)
+                gameManager.handleCollision(content: content)
             }
         }
         .onAppear() {
@@ -25,6 +26,11 @@ struct ImmersiveView: View {
         .onDisappear() {
             gameManager.stop()
         }
+        .gesture(SpatialTapGesture().targetedToAnyEntity().onEnded({ value in
+            if value.entity.name == BOX_ENTITY_NAME {
+                gameManager.handleCollidedBox(box: value.entity)
+            }
+        }))
     }
 }
 

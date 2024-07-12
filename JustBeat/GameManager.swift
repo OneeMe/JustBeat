@@ -9,6 +9,10 @@ import RealityKit
 import RealityKitContent
 import Spatial
 import ARKit
+import SwiftUI
+
+let BOX_ENTITY_NAME = "Box"
+let GLOVE_ENTITY_NAME_SUFFIX = "Glove"
 
 class GameManager: ObservableObject {
     let root = Entity()
@@ -32,10 +36,36 @@ class GameManager: ObservableObject {
 
     func stop() {
         songPlayer.stop()
+        colisionSubs?.cancel()
         Task { @MainActor in
             self.cancelAllTasks()
         }
     }
+    
+    func handleCollision(content: RealityViewContent) {
+        colisionSubs = content.subscribe(to: CollisionEvents.Began.self) { collisionEvent in
+            let a = collisionEvent.entityA
+            let b = collisionEvent.entityB
+            var box: Entity!
+            if a.name.hasSuffix(GLOVE_ENTITY_NAME_SUFFIX) && b.name == BOX_ENTITY_NAME {
+                box = b
+            } else if a.name == BOX_ENTITY_NAME && b.name.hasSuffix(GLOVE_ENTITY_NAME_SUFFIX) {
+                box = a
+            } else {
+                return
+            }
+            self.handleCollidedBox(box: box)
+        }
+    }
+    
+    func handleCollidedBox(box: Entity) {
+        guard let parent = box.parent else {
+            return
+        }
+        parent.removeFromParent()
+    }
+    // MARK: Private - Collision
+    private var colisionSubs: EventSubscription?
     
      // MARK: Private - Hands
     
@@ -83,6 +113,7 @@ class GameManager: ObservableObject {
     private var tasks: [DispatchWorkItem] = []
 
     private init() {
+        
         Task { @MainActor in
             boxTemplate = try? await Entity(named: "Box", in: realityKitContentBundle)
             leftHand = try? await Entity(named: "LeftGlove", in: realityKitContentBundle)
