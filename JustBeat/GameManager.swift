@@ -51,6 +51,13 @@ class GameManager: ObservableObject {
         for note in notes {
             let createTask = DispatchWorkItem {
                 let box = self.spawnBox(note: note)
+                let destroyTask = DispatchWorkItem {
+                    box.removeFromParent()
+                }
+                self.tasks.append(destroyTask)
+                DispatchQueue.main.asyncAfter(deadline: .now() + BoxSpawnParameters.lifeTime) {
+                    destroyTask.perform()
+                }
             }
             tasks.append(createTask)
             DispatchQueue.main.asyncAfter(deadline: .now() + note.time * 0.5 - BoxSpawnParameters.lifeTime / 2) {
@@ -77,7 +84,13 @@ class GameManager: ObservableObject {
 
         box.position = simd_float(start.vector + .init(x: 0, y: 0, z: -0.7))
 
+        let animation = generateBoxMovementAnimation(start: start)
+
+        box.playAnimation(animation, transitionDuration: 1.0, startsPaused: false)
+
         root.addChild(box)
+        
+        return box
     }
 
     private func generateStart(note: Note) -> Point3D {
@@ -108,6 +121,31 @@ class GameManager: ObservableObject {
         )
     }
 
+    private func generateBoxMovementAnimation(start: Point3D) -> AnimationResource {
+        let end = Point3D(
+            x: start.x + BoxSpawnParameters.deltaX,
+            y: start.y + BoxSpawnParameters.deltaY,
+            z: start.z + BoxSpawnParameters.deltaZ
+        )
+
+        let line = FromToByAnimation<Transform>(
+            name: "line",
+            from: .init(scale: .init(repeating: 1), translation: simd_float(start.vector)),
+            to: .init(scale: .init(repeating: 1), translation: simd_float(end.vector)),
+            duration: BoxSpawnParameters.lifeTime,
+            bindTarget: .transform
+        )
+
+        let animation = try! AnimationResource
+            .generate(with: line)
+        return animation
+    }
+}
+
 enum BoxSpawnParameters {
+    static var deltaX = 0.02
+    static var deltaY = -0.12
+    static var deltaZ = 12.0
+    
     static var lifeTime = 4.0
 }
