@@ -59,11 +59,12 @@ class GameManager: ObservableObject {
     }
     
     func handleCollidedBox(box: Entity) {
-        guard let parent = box.parent, let audio = hitAudio, let audioEntity = parent.findEntity(named: "SpatialAudio") else {
+        guard let parent = box.parent, let audio = hitAudio, let audioEntity = parent.findEntity(named: "SpatialAudio"), let particleEmitter = parent.findEntity(named: "ParticleEmitter") else {
             return
         }
         parent.stopAllAnimations()
         audioEntity.playAudio(audio)
+        particleEmitter.components[ParticleEmitterComponent.self]?.burst()
         box.removeFromParent()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             parent.removeFromParent()
