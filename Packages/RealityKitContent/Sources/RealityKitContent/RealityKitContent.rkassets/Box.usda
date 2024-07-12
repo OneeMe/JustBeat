@@ -42,5 +42,13 @@ def Xform "Root"
             uniform token info:id = "RealityKit.InputTarget"
         }
     }
+
+    def Xform "SpatialAudio"
+    {
+        def RealityKitComponent "SpatialAudio"
+        {
+            uniform token info:id = "RealityKit.SpatialAudio"
+        }
+    }
 }
 

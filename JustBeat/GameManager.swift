@@ -3,12 +3,12 @@
 // Created by: onee on 2024/7/12
 //
 
+import ARKit
 import AVKit
 import Foundation
 import RealityKit
 import RealityKitContent
 import Spatial
-import ARKit
 import SwiftUI
 
 let BOX_ENTITY_NAME = "Box"
@@ -41,7 +41,7 @@ class GameManager: ObservableObject {
             self.cancelAllTasks()
         }
     }
-    
+
     func handleCollision(content: RealityViewContent) {
         colisionSubs = content.subscribe(to: CollisionEvents.Began.self) { collisionEvent in
             let a = collisionEvent.entityA
@@ -59,16 +59,24 @@ class GameManager: ObservableObject {
     }
     
     func handleCollidedBox(box: Entity) {
-        guard let parent = box.parent else {
+        guard let parent = box.parent, let audio = hitAudio, let audioEntity = parent.findEntity(named: "SpatialAudio") else {
             return
         }
-        parent.removeFromParent()
+        parent.stopAllAnimations()
+        audioEntity.playAudio(audio)
+        box.removeFromParent()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            parent.removeFromParent()
+        }
     }
+
     // MARK: Private - Collision
+
     private var colisionSubs: EventSubscription?
-    
-     // MARK: Private - Hands
-    
+    private var hitAudio: AudioFileResource?
+
+    // MARK: Private - Hands
+
     private var leftHand: Entity?
     private var rightHand: Entity?
     private let session = ARKitSession()
@@ -113,11 +121,14 @@ class GameManager: ObservableObject {
     private var tasks: [DispatchWorkItem] = []
 
     private init() {
-        
         Task { @MainActor in
             boxTemplate = try? await Entity(named: "Box", in: realityKitContentBundle)
             leftHand = try? await Entity(named: "LeftGlove", in: realityKitContentBundle)
             rightHand = try? await Entity(named: "RightGlove", in: realityKitContentBundle)
+            hitAudio = try? await AudioFileResource(
+                named: "Hit.wav",
+                configuration: .init(shouldLoop: false)
+            )
             isReady = true
         }
     }
@@ -165,7 +176,7 @@ class GameManager: ObservableObject {
         box.playAnimation(animation, transitionDuration: 1.0, startsPaused: false)
 
         root.addChild(box)
-        
+
         return box
     }
 
@@ -222,6 +233,6 @@ enum BoxSpawnParameters {
     static var deltaX = 0.02
     static var deltaY = -0.12
     static var deltaZ = 12.0
-    
+
     static var lifeTime = 4.0
 }
