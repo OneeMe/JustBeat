@@ -23,6 +23,18 @@
       }
     ]
   },
+  "8773B476-8A7F-4F42-A333-2E57BC9A0165" : {
+    "objectMetadataList" : [
+      [
+        "8773B476-8A7F-4F42-A333-2E57BC9A0165",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      }
+    ]
+  },
   "66168B71-AB05-424E-8B6C-D33D6E61B08F" : {
     "objectMetadataList" : [
       [
@@ -147,6 +159,27 @@
       [
         "D66134B1-3681-4A8E-AFE5-29F257229F3B",
         "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      }
+    ]
+  },
+  "EFA2C18E-F8B1-4E1F-89E2-9F810BC08213" : {
+    "objectMetadataList" : [
+      [
+        "EFA2C18E-F8B1-4E1F-89E2-9F810BC08213",
+        "WaterPlane",
+        "new_assets"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "EFA2C18E-F8B1-4E1F-89E2-9F810BC08213",
+        "WaterPlane"
       ],
       {
         "isExpanded" : true,
