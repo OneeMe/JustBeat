@@ -27,5 +27,6 @@ struct JustBeatApp: App {
                 }
         }
         .immersionStyle(selection: .constant(.full), in: .full)
+        .upperLimbVisibility(.hidden)
     }
 }

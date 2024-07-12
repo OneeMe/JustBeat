@@ -11,6 +11,8 @@ struct ToggleImmersiveSpaceButton: View {
 
     @Environment(\.dismissImmersiveSpace) private var dismissImmersiveSpace
     @Environment(\.openImmersiveSpace) private var openImmersiveSpace
+    
+    @StateObject private var gameManager = GameManager.shared
 
     var body: some View {
         Button {
@@ -49,7 +51,7 @@ struct ToggleImmersiveSpaceButton: View {
         } label: {
             Text(appModel.immersiveSpaceState == .open ? "Hide Immersive Space" : "Show Immersive Space")
         }
-        .disabled(appModel.immersiveSpaceState == .inTransition)
+        .disabled(appModel.immersiveSpaceState == .inTransition && !gameManager.isReady)
         .animation(.none, value: 0)
         .fontWeight(.semibold)
     }

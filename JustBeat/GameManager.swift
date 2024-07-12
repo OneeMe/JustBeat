@@ -8,9 +8,11 @@ import Foundation
 import RealityKit
 import RealityKitContent
 import Spatial
+import ARKit
 
 class GameManager: ObservableObject {
     let root = Entity()
+    @Published var isReady = false
 
     static let shared = GameManager()
 
@@ -21,6 +23,10 @@ class GameManager: ObservableObject {
         songPlayer.play()
         Task { @MainActor in
             self.scheduleTasks(notes: songInfo.notes)
+            if self.dataProvidersAreSupported && self.isHandsReady {
+                try await self.session.run([self.handTracking])
+                await self.processHandUpdates()
+            }
         }
     }
 
@@ -28,6 +34,44 @@ class GameManager: ObservableObject {
         songPlayer.stop()
         Task { @MainActor in
             self.cancelAllTasks()
+        }
+    }
+    
+     // MARK: Private - Hands
+    
+    private var leftHand: Entity?
+    private var rightHand: Entity?
+    private let session = ARKitSession()
+    private let handTracking = HandTrackingProvider()
+
+    private var dataProvidersAreSupported: Bool {
+        HandTrackingProvider.isSupported
+    }
+
+    private var isHandsReady: Bool {
+        handTracking.state == .initialized
+    }
+
+    private func processHandUpdates() async {
+        for await update in handTracking.anchorUpdates {
+            let handAnchor = update.anchor
+            guard
+                handAnchor.isTracked,
+                let handEntity = handAnchor.handSkeleton?.joint(.wrist),
+                handEntity.isTracked else { continue }
+
+            let originFromIndexFingerTip = handAnchor.originFromAnchorTransform * handEntity.anchorFromJointTransform
+
+            var entity: Entity!
+            if handAnchor.chirality == .left {
+                entity = leftHand
+            } else {
+                entity = rightHand
+            }
+            if await entity.parent == nil {
+                await root.addChild(entity)
+            }
+            await entity.setTransformMatrix(originFromIndexFingerTip, relativeTo: nil)
         }
     }
 
@@ -40,9 +84,10 @@ class GameManager: ObservableObject {
 
     private init() {
         Task { @MainActor in
-            if let box = try? await Entity(named: "Box", in: realityKitContentBundle) {
-                boxTemplate = box
-            }
+            boxTemplate = try? await Entity(named: "Box", in: realityKitContentBundle)
+            leftHand = try? await Entity(named: "LeftGlove", in: realityKitContentBundle)
+            rightHand = try? await Entity(named: "RightGlove", in: realityKitContentBundle)
+            isReady = true
         }
     }
 
