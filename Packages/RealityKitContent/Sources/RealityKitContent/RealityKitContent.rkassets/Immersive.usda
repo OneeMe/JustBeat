@@ -8,21 +8,16 @@
 def Xform "Root"
 {
     reorder nameChildren = ["Sphere_Left", "Sphere_Right", "GridMaterial"]
-    def "WaterPlane" (
-        active = true
-        prepend references = @Environment/WaterPlane/WaterPlane.usdc@
+    def "SkySphere" (
+        prepend references = @SkySphere.usdz@
     )
     {
         float3 xformOp:scale = (1, 1, 1)
-    }
 
-    def "MeadowDemo_v2" (
-        active = true
-        prepend references = @Environment/MeadowDemo_v2/MeadowDemo_v2.usdc@
-    )
-    {
-        float3 xformOp:scale = (0.01, 0.01, 0.01)
-        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        over "SkySphere_mat"
+        {
+            asset inputs:SkySphere_Texture = @Cyberpunk Skybox.png@
+        }
     }
 }
 

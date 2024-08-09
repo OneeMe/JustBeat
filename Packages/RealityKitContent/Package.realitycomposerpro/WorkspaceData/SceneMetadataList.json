@@ -97,11 +97,11 @@
       [
         "AF09ED6F-1707-48FD-8720-65B998362C09",
         "Root",
-        "SkySphere"
+        "SkyDome",
+        "Looks"
       ],
       {
-        "disallowsFraming" : true,
-        "isExpanded" : false,
+        "isExpanded" : true,
         "isLocked" : false
       },
       [
@@ -109,6 +109,24 @@
         "Root",
         "Video_Dock",
         "Ground"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "AF09ED6F-1707-48FD-8720-65B998362C09",
+        "Root",
+        "SkySphere"
+      ],
+      {
+        "disallowsFraming" : true,
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "AF09ED6F-1707-48FD-8720-65B998362C09",
+        "Root"
       ],
       {
         "isExpanded" : true,
@@ -126,35 +144,8 @@
       },
       [
         "AF09ED6F-1707-48FD-8720-65B998362C09",
-        "Root"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "AF09ED6F-1707-48FD-8720-65B998362C09",
-        "Root",
-        "MeadowDemo_v2"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "AF09ED6F-1707-48FD-8720-65B998362C09",
         "Root",
         "MeadowDemo_v2",
-        "Looks"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "AF09ED6F-1707-48FD-8720-65B998362C09",
-        "Root",
-        "SkyDome",
         "Looks"
       ],
       {
@@ -177,6 +168,27 @@
         "CB766F92-EE55-4A63-9401-E7B8C009764D",
         "Root",
         "GridMaterial"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      }
+    ]
+  },
+  "D04C0501-046E-417B-9608-6ECAEC52AB6D" : {
+    "objectMetadataList" : [
+      [
+        "D04C0501-046E-417B-9608-6ECAEC52AB6D",
+        "USD_Export_v2"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "D04C0501-046E-417B-9608-6ECAEC52AB6D",
+        "USD_Export_v2",
+        "Looks"
       ],
       {
         "isExpanded" : true,
@@ -220,7 +232,8 @@
     "objectMetadataList" : [
       [
         "EFA2C18E-F8B1-4E1F-89E2-9F810BC08213",
-        "WaterPlane"
+        "WaterPlane",
+        "new_assets"
       ],
       {
         "isExpanded" : true,
@@ -228,8 +241,7 @@
       },
       [
         "EFA2C18E-F8B1-4E1F-89E2-9F810BC08213",
-        "WaterPlane",
-        "new_assets"
+        "WaterPlane"
       ],
       {
         "isExpanded" : true,
