@@ -16,7 +16,7 @@ struct JustBeatApp: App {
                 .environment(appModel)
         }
         .windowStyle(.plain)
-        .defaultSize(width: 500, height: 600)
+        .defaultSize(width: 500, height: 750)
 
         ImmersiveSpace(id: appModel.immersiveSpaceID) {
             ImmersiveView()
