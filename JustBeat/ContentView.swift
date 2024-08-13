@@ -18,19 +18,14 @@ struct ContentView: View {
                 .shadow(color: .red, radius: 5)
                 .shadow(color: .red, radius: 5)
                 .shadow(color: .red, radius: 50)
-                .shadow(color: .red, radius: 100)
-                .shadow(color: .red, radius: 200)
             
             Text("Beat")
                 .font(.system(size: 70, weight: .thin))
                 .shadow(color: .blue, radius: 5)
                 .shadow(color: .blue, radius: 5)
                 .shadow(color: .blue, radius: 50)
-                .shadow(color: .blue, radius: 100)
-                .shadow(color: .blue, radius: 200)
         }
         .padding()
-        
         
         VStack {
             Picker("Select Game Scene", selection: $gameManager.gameScene) {
@@ -45,6 +40,7 @@ struct ContentView: View {
         }
         .padding()
         .glassBackgroundEffect()
+        
     }
 }
 
