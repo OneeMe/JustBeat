@@ -11,55 +11,10 @@
       }
     ]
   },
-  "4F900E16-254B-4ACF-A409-024DD2CF65DD" : {
-    "objectMetadataList" : [
-      [
-        "4F900E16-254B-4ACF-A409-024DD2CF65DD",
-        "Root",
-        "LeftGlove"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "4F900E16-254B-4ACF-A409-024DD2CF65DD",
-        "Root"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      }
-    ]
-  },
-  "65F6F990-A780-4474-B78B-572E0E4E273D" : {
-    "objectMetadataList" : [
-      [
-        "65F6F990-A780-4474-B78B-572E0E4E273D",
-        "Root"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      }
-    ]
-  },
   "239C6F00-DF4F-4296-9959-727BC9106BE4" : {
     "objectMetadataList" : [
       [
         "239C6F00-DF4F-4296-9959-727BC9106BE4",
-        "Root"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      }
-    ]
-  },
-  "8773B476-8A7F-4F42-A333-2E57BC9A0165" : {
-    "objectMetadataList" : [
-      [
-        "8773B476-8A7F-4F42-A333-2E57BC9A0165",
         "Root"
       ],
       {
@@ -80,6 +35,39 @@
       }
     ]
   },
+  "4F900E16-254B-4ACF-A409-024DD2CF65DD" : {
+    "objectMetadataList" : [
+      [
+        "4F900E16-254B-4ACF-A409-024DD2CF65DD",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "4F900E16-254B-4ACF-A409-024DD2CF65DD",
+        "Root",
+        "LeftGlove"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      }
+    ]
+  },
+  "65F6F990-A780-4474-B78B-572E0E4E273D" : {
+    "objectMetadataList" : [
+      [
+        "65F6F990-A780-4474-B78B-572E0E4E273D",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      }
+    ]
+  },
   "66168B71-AB05-424E-8B6C-D33D6E61B08F" : {
     "objectMetadataList" : [
       [
@@ -92,12 +80,42 @@
       }
     ]
   },
+  "8773B476-8A7F-4F42-A333-2E57BC9A0165" : {
+    "objectMetadataList" : [
+      [
+        "8773B476-8A7F-4F42-A333-2E57BC9A0165",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      }
+    ]
+  },
   "AF09ED6F-1707-48FD-8720-65B998362C09" : {
     "objectMetadataList" : [
       [
         "AF09ED6F-1707-48FD-8720-65B998362C09",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "AF09ED6F-1707-48FD-8720-65B998362C09",
         "Root",
-        "SkyDome",
+        "SkyDome"
+      ],
+      {
+        "disallowsFraming" : true,
+        "isExpanded" : false,
+        "isLocked" : false
+      },
+      [
+        "AF09ED6F-1707-48FD-8720-65B998362C09",
+        "Root",
+        "MeadowDemo_v2",
         "Looks"
       ],
       {
@@ -126,7 +144,9 @@
       },
       [
         "AF09ED6F-1707-48FD-8720-65B998362C09",
-        "Root"
+        "Root",
+        "SkyDome",
+        "Looks"
       ],
       {
         "isExpanded" : true,
@@ -135,18 +155,8 @@
       [
         "AF09ED6F-1707-48FD-8720-65B998362C09",
         "Root",
-        "SkyDome"
-      ],
-      {
-        "disallowsFraming" : true,
-        "isExpanded" : false,
-        "isLocked" : false
-      },
-      [
-        "AF09ED6F-1707-48FD-8720-65B998362C09",
-        "Root",
-        "MeadowDemo_v2",
-        "Looks"
+        "SkySphere",
+        "SkySphere_mat"
       ],
       {
         "isExpanded" : true,
@@ -205,9 +215,7 @@
     "objectMetadataList" : [
       [
         "D66134B1-3681-4A8E-AFE5-29F257229F3B",
-        "Root",
-        "GridMaterial",
-        "GridMaterial"
+        "Root"
       ],
       {
         "isExpanded" : true,
@@ -215,7 +223,9 @@
       },
       [
         "D66134B1-3681-4A8E-AFE5-29F257229F3B",
-        "Root"
+        "Root",
+        "GridMaterial",
+        "GridMaterial"
       ],
       {
         "isExpanded" : true,
@@ -232,8 +242,7 @@
     "objectMetadataList" : [
       [
         "EFA2C18E-F8B1-4E1F-89E2-9F810BC08213",
-        "WaterPlane",
-        "new_assets"
+        "WaterPlane"
       ],
       {
         "isExpanded" : true,
@@ -241,7 +250,8 @@
       },
       [
         "EFA2C18E-F8B1-4E1F-89E2-9F810BC08213",
-        "WaterPlane"
+        "WaterPlane",
+        "new_assets"
       ],
       {
         "isExpanded" : true,

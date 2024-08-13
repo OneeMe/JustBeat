@@ -16,8 +16,10 @@ let GLOVE_ENTITY_NAME_SUFFIX = "Glove"
 
 class GameManager: ObservableObject {
     let root = Entity()
+    let skyBox = Entity()
     @Published var isReady = false
-
+    @Published var gameScene: GameScene = .cyberpunk
+    
     static let shared = GameManager()
 
     func start() {

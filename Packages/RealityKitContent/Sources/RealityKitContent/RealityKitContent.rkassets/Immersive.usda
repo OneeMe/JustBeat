@@ -16,7 +16,26 @@ def Xform "Root"
 
         over "SkySphere_mat"
         {
-            asset inputs:SkySphere_Texture = @Cyberpunk Skybox.png@
+            asset inputs:SkySphere_Texture = @Cyberpunk Skybox.png@ (
+                customData = {
+                    dictionary realitykit = {
+                        float2 positionInSubgraph = (-754.4517, 71.84726)
+                        float2 sizeInSubgraph = (188.5, 53)
+                        int stackingOrderInSubgraph = 403
+                    }
+                }
+            )
+
+            over "Texcoord"
+            {
+                int ui:nodegraph:node:stackingOrder = 388
+            }
+
+            over "RealityKitTexture2D_1"
+            {
+                string inputs:v_wrap_mode
+                int ui:nodegraph:node:stackingOrder = 396
+            }
         }
     }
 }
