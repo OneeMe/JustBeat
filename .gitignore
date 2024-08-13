@@ -54,3 +54,5 @@ xcuserdata/
 # End of https://www.toptal.com/developers/gitignore/api/macos,xcode
 *.rcuserdata
 Packages/RealityKitContent/Package.realitycomposerpro/PluginData
+Packages/RealityKitContent/Package.realitycomposerpro/WorkspaceData
+Packages/RealityKitContent/Package.realitycomposerpro/WorkspaceData
