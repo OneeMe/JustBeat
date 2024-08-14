@@ -137,7 +137,7 @@ class GameManager: ObservableObject {
             leftHand = try? await Entity(named: "LeftGlove", in: realityKitContentBundle)
             rightHand = try? await Entity(named: "RightGlove", in: realityKitContentBundle)
             hitAudio = try? await AudioFileResource(
-                named: "Hit.wav",
+                named: "hit.mp3",
                 configuration: .init(shouldLoop: false)
             )
             isReady = true
