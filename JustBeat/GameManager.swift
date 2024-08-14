@@ -23,11 +23,11 @@ class GameManager: ObservableObject {
     static let shared = GameManager()
 
     func start() {
-        songPlayer.volume = 0.6
-        songPlayer.numberOfLoops = 0
-        songPlayer.currentTime = 0
-        songPlayer.play()
         Task { @MainActor in
+            songPlayer.volume = 0.6
+            songPlayer.numberOfLoops = 0
+            songPlayer.currentTime = 0
+            songPlayer.play()
             self.scheduleTasks(notes: songInfo.notes)
             if self.dataProvidersAreSupported && self.isHandsReady {
                 try await self.session.run([self.handTracking])
@@ -118,7 +118,7 @@ class GameManager: ObservableObject {
 
     // MARK: Private
 
-    private let songPlayer = try! AVAudioPlayer(contentsOf: Bundle.main.url(forResource: "Gokuraku Jodo", withExtension: "m4a")!)
+    private let songPlayer = try! AVAudioPlayer(contentsOf: Bundle.main.url(forResource: "2077", withExtension: "mp3")!)
     private let songInfo: Stage! = parseJSON()!
     private var boxTemplate: Entity?
     private var tasks: [DispatchWorkItem] = []
@@ -138,19 +138,34 @@ class GameManager: ObservableObject {
 
     @MainActor
     private func scheduleTasks(notes: [Note]) {
+        let startTime = DispatchTime.now()
+        // get current time
+        let startDate = Date()
         for note in notes {
             let createTask = DispatchWorkItem {
                 let box = self.spawnBox(note: note)
+                let hitTask = DispatchWorkItem {
+                    guard let audio = self.hitAudio, let audioEntity = box.findEntity(named: "SpatialAudio") else {
+                        return
+                    }
+                    audioEntity.playAudio(audio)
+                }
                 let destroyTask = DispatchWorkItem {
                     box.removeFromParent()
                 }
+                self.tasks.append(hitTask)
                 self.tasks.append(destroyTask)
+                DispatchQueue.main.asyncAfter(deadline: .now() + BoxSpawnParameters.lifeTime / 2) {
+                    hitTask.perform()
+                    let duration = Date().timeIntervalSince(startDate)
+                    print("hit at \(duration  * 2) beat")
+                }
                 DispatchQueue.main.asyncAfter(deadline: .now() + BoxSpawnParameters.lifeTime) {
                     destroyTask.perform()
                 }
             }
             tasks.append(createTask)
-            DispatchQueue.main.asyncAfter(deadline: .now() + note.time * 0.5 - BoxSpawnParameters.lifeTime / 2) {
+            DispatchQueue.main.asyncAfter(deadline: startTime + note.time * 0.5 - BoxSpawnParameters.lifeTime / 2) {
                 createTask.perform()
             }
         }
@@ -207,7 +222,7 @@ class GameManager: ObservableObject {
         return Point3D(
             x: x,
             y: y,
-            z: -6.0
+            z: -(BoxSpawnParameters.deltaZ / 2) - 3
         )
     }
 
@@ -237,5 +252,5 @@ enum BoxSpawnParameters {
     static var deltaY = -0.12
     static var deltaZ = 12.0
 
-    static var lifeTime = 4.0
+    static var lifeTime = 3.0
 }
