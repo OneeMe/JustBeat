@@ -31,7 +31,6 @@ struct ContentView: View {
             
             VStack {
                 AlbumView()
-
             }
             
             VStack {

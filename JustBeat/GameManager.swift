@@ -13,23 +13,30 @@ import SwiftUI
 
 let BOX_ENTITY_NAME = "Box"
 let GLOVE_ENTITY_NAME_SUFFIX = "Glove"
+let songs = [
+    Song(songName: "2077", defaultGameScene: .cyberpunk),
+    Song(songName: "Missing U", defaultGameScene: .painting),
+    Song(songName: "SaintPerros", defaultGameScene: .cartoon),
+]
 
 class GameManager: ObservableObject {
     let root = Entity()
     let skyBox = Entity()
+    
     @Published var isReady = false
+    @Published var selectedSong: Song = songs.first!
     @Published var gameScene: GameScene = .cyberpunk
     
     static let shared = GameManager()
 
     func start() {
         let startTime = DispatchTime.now()
-        self.songPlayer.volume = 0.6
-        self.songPlayer.numberOfLoops = 0
-        self.songPlayer.currentTime = 0
-        self.songPlayer.play()
+        self.selectedSong.songPlayer.volume = 0.6
+        self.selectedSong.songPlayer.numberOfLoops = 0
+        self.selectedSong.songPlayer.currentTime = 0
+        self.selectedSong.songPlayer.play()
         Task { @MainActor in
-            self.scheduleTasks(notes: songInfo.notes, startTime: startTime)
+            self.scheduleTasks(notes: self.selectedSong.songStage.notes, startTime: startTime)
             if self.dataProvidersAreSupported && self.isHandsReady {
                 try await self.session.run([self.handTracking])
                 await self.processHandUpdates()
@@ -38,10 +45,13 @@ class GameManager: ObservableObject {
     }
 
     func stop() {
-        songPlayer.stop()
+        self.selectedSong.songPlayer.stop()
         colisionSubs?.cancel()
         Task { @MainActor in
             self.cancelAllTasks()
+        }
+        for entity in root.children {
+            entity.removeFromParent()
         }
     }
 
@@ -118,9 +128,6 @@ class GameManager: ObservableObject {
     }
 
     // MARK: Private
-
-    private let songPlayer = try! AVAudioPlayer(contentsOf: Bundle.main.url(forResource: "2077", withExtension: "mp3")!)
-    private let songInfo: Stage! = parseJSON()!
     private var boxTemplate: Entity?
     private var tasks: [DispatchWorkItem] = []
 
