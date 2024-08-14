@@ -23,12 +23,13 @@ class GameManager: ObservableObject {
     static let shared = GameManager()
 
     func start() {
+        let startTime = DispatchTime.now()
+        self.songPlayer.volume = 0.6
+        self.songPlayer.numberOfLoops = 0
+        self.songPlayer.currentTime = 0
+        self.songPlayer.play()
         Task { @MainActor in
-            songPlayer.volume = 0.6
-            songPlayer.numberOfLoops = 0
-            songPlayer.currentTime = 0
-            songPlayer.play()
-            self.scheduleTasks(notes: songInfo.notes)
+            self.scheduleTasks(notes: songInfo.notes, startTime: startTime)
             if self.dataProvidersAreSupported && self.isHandsReady {
                 try await self.session.run([self.handTracking])
                 await self.processHandUpdates()
@@ -137,29 +138,28 @@ class GameManager: ObservableObject {
     }
 
     @MainActor
-    private func scheduleTasks(notes: [Note]) {
-        let startTime = DispatchTime.now()
+    private func scheduleTasks(notes: [Note], startTime: DispatchTime) {
         // get current time
-        let startDate = Date()
         for note in notes {
             let createTask = DispatchWorkItem {
                 let box = self.spawnBox(note: note)
-                let hitTask = DispatchWorkItem {
-                    guard let audio = self.hitAudio, let audioEntity = box.findEntity(named: "SpatialAudio") else {
-                        return
-                    }
-                    audioEntity.playAudio(audio)
-                }
+//                let hitTask = DispatchWorkItem {
+//                    guard let audio = self.hitAudio, let audioEntity = box.findEntity(named: "SpatialAudio") else {
+//                        return
+//                    }
+//                    audioEntity.playAudio(audio)
+//                    box.components[OpacityComponent.self] = OpacityComponent(opacity: 0.1)
+//                }
                 let destroyTask = DispatchWorkItem {
                     box.removeFromParent()
                 }
-                self.tasks.append(hitTask)
+//                self.tasks.append(hitTask)
                 self.tasks.append(destroyTask)
-                DispatchQueue.main.asyncAfter(deadline: .now() + BoxSpawnParameters.lifeTime / 2) {
-                    hitTask.perform()
-                    let duration = Date().timeIntervalSince(startDate)
-                    print("hit at \(duration  * 2) beat")
-                }
+//                DispatchQueue.main.asyncAfter(deadline: .now() + BoxSpawnParameters.lifeTime / 2) {
+//                    hitTask.perform()
+//                    let duration = Date().timeIntervalSince(startDate)
+//                    print("hit at \(duration  * 2) beat")
+//                }
                 DispatchQueue.main.asyncAfter(deadline: .now() + BoxSpawnParameters.lifeTime) {
                     destroyTask.perform()
                 }
@@ -222,7 +222,7 @@ class GameManager: ObservableObject {
         return Point3D(
             x: x,
             y: y,
-            z: -(BoxSpawnParameters.deltaZ / 2) - 3
+            z: -(BoxSpawnParameters.deltaZ / 2) - 0.5
         )
     }
 
