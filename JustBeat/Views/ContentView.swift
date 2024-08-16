@@ -12,43 +12,11 @@ struct ContentView: View {
     @StateObject var gameManager: GameManager = GameManager.shared
     
     var body: some View {
-        
         VStack {
-            HStack {
-                Text("Just")
-                    .font(.system(size: 70, weight: .thin))
-                    .shadow(color: .red, radius: 5)
-                    .shadow(color: .red, radius: 5)
-                    .shadow(color: .red, radius: 50)
-                
-                Text("Beat")
-                    .font(.system(size: 70, weight: .thin))
-                    .shadow(color: .blue, radius: 5)
-                    .shadow(color: .blue, radius: 5)
-                    .shadow(color: .blue, radius: 50)
-            }
-            .padding()
-            
-            VStack {
-                AlbumView()
-            }
-            
-            VStack {
-
-                Picker("Select Game Scene", selection: $gameManager.gameScene) {
-                    ForEach(GameScene.allCases) { scene in
-                        Text(scene.rawValue).tag(scene)
-                    }
-                }
-                .pickerStyle(SegmentedPickerStyle())
-                .padding()
-                
-                ToggleImmersiveSpaceButton()
-            }
-            .padding()
-            .glassBackgroundEffect()
+            TitleView()
+            SongView()
+            SceneView()
         }
-        
     }
 }
 

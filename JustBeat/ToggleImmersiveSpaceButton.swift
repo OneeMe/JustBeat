@@ -49,7 +49,7 @@ struct ToggleImmersiveSpaceButton: View {
                 }
             }
         } label: {
-            Text(appModel.immersiveSpaceState == .open ? "Exit Game" : "Enter Game")
+            Text(appModel.immersiveSpaceState == .open ? "Quit" : "Play")
         }
         .disabled(appModel.immersiveSpaceState == .inTransition && !gameManager.isReady)
         .animation(.none, value: 0)
